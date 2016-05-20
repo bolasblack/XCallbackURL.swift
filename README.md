@@ -19,7 +19,7 @@ github "bolasblack/XCallbackURL.swift"
 ```swift
 XCallbackURL.sharedInstance
     .processer { context in
-        print("I can return a new context")
+        print("I can modify context before handler get it")
         return context
     }
     .handle("/tasks/:id") { context in
