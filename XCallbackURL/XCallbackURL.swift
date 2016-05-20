@@ -15,15 +15,15 @@ public class XCallbackURL {
     public typealias Processer = (context: Context) -> Context
     
     struct Handler {
-        var id: String!
-        var regex: Regex!
-        var fn: Callback!
+        let id: String
+        let regex: Regex
+        let fn: Callback
     }
     
     public struct Context {
-        public var id: String!
-        public var url: NSURL!
-        public var regex: Regex!
+        public let id: String
+        public let url: NSURL
+        public let regex: Regex
         
         public var params: [String:String?] {
             let queryDictionary = url.queryDictionary
@@ -37,7 +37,7 @@ public class XCallbackURL {
         }
         
         public var sourceName: String? {
-            return self.params["x-source"]!
+            return self.params["x-source"].flatMap({$0})
         }
         
         public var successURLComponents: NSURLComponents? {

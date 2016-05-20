@@ -126,7 +126,7 @@ class XCallbackSpec: QuickSpec {
                             } else {
                                 urlComponents.queryItems = [newQueryItem]
                             }
-                            let newURL = urlComponents.URL
+                            let newURL = urlComponents.URL!
                             result = XCallbackURL.Context(id: context.id, url: newURL, regex: context.regex)
                         }
                         return result
