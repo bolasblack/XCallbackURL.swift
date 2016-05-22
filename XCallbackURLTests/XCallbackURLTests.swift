@@ -35,6 +35,19 @@ class XCallbackURLContextSpec: QuickSpec {
             }
         }
         
+        describe(".getCallbackURL") {
+            it("works") {
+                expect(context.getCallbackURL("success")!.string!).to(equal("launch:"))
+                expect(context.getCallbackURL("error")!.string!).to(equal("drafts:"))
+                expect(context.getCallbackURL("cancel")!.string!).to(equal("workflow:"))
+            }
+            
+            it("can handle non-existent params") {
+                let context = XCallbackURL.Context(id: "", url: NSURL(string: "app://x-callback-url/tasks/0")!, regex: regex)
+                expect(context.getCallbackURL("success")).to(beNil())
+            }
+        }
+        
         describe(".successURLComponents") {
             it("works") {
                 expect(context.successURLComponents!.string!).to(equal("launch:"))

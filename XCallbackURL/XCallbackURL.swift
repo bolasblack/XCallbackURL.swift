@@ -53,8 +53,8 @@ public class XCallbackURL {
         }
 
         func getCallbackURL(type: String) -> NSURLComponents? {
-            guard let urlString = self.params["x-\(type)"]! else { return nil }
-            return NSURLComponents(string: urlString)
+            guard let urlString = self.params["x-\(type)"] else { return nil }
+            return NSURLComponents(string: urlString!)
         }
     }
     
