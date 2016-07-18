@@ -73,6 +73,7 @@ class XCallbackSpec: QuickSpec {
         let xCallbackURL = XCallbackURL.sharedInstance
         
         var projectTasksUrlCalledCount = 0
+        var projectIdsUrlCalledCount = 0
         var projectsUrlCalledCount = 0
         var tasksUrlCalledCount = 0
         var contexts: [XCallbackURL.Context] = []
@@ -82,6 +83,7 @@ class XCallbackSpec: QuickSpec {
             xCallbackURL.clearHandlers()
             
             projectTasksUrlCalledCount = 0
+            projectIdsUrlCalledCount = 0
             projectsUrlCalledCount = 0
             tasksUrlCalledCount = 0
             contexts = []
@@ -92,6 +94,10 @@ class XCallbackSpec: QuickSpec {
                     projectTasksUrlCalledCount += 1
                 }
                 .handle("/projects/:id") { context in
+                    contexts.append(context)
+                    projectIdsUrlCalledCount += 1
+                }
+                .handle("/projects") { context in
                     contexts.append(context)
                     projectsUrlCalledCount += 1
                 }
@@ -106,9 +112,11 @@ class XCallbackSpec: QuickSpec {
                 xCallbackURL
                     .perform(NSURL(string: "app://x-callback-url/projects/tasks")!)
                     .perform(NSURL(string: "app://x-callback-url/projects/1")!)
+                    .perform(NSURL(string: "app://x-callback-url/projects")!)
                     .perform(NSURL(string: "app://x-callback-url/tasks")!)
                 expect(projectTasksUrlCalledCount) == 1
-                expect(projectsUrlCalledCount) == 2
+                expect(projectIdsUrlCalledCount) == 2
+                expect(projectsUrlCalledCount) == 1
                 expect(tasksUrlCalledCount) == 1
             }
         }
